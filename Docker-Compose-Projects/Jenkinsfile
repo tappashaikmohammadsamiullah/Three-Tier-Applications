@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/tappashaikmohammadsamiullah/Three-Tier-Applications.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'docker compose build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'docker compose config'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat 'docker compose up -d'
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                bat 'docker compose ps'
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                bat 'docker image prune -f'
+            }
+        }
+    }
+}
