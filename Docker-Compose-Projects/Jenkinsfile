@@ -12,31 +12,31 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'docker compose build'
+                bat 'cd Docker-Compose-Projects && docker compose build'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'docker compose config'
+                bat 'cd Docker-Compose-Projects && docker compose config'
             }
         }
 
         stage('Deploy') {
             steps {
-                bat 'docker compose up -d'
+                bat 'cd Docker-Compose-Projects && docker compose up -d'
             }
         }
 
         stage('Health Check') {
             steps {
-                bat 'docker compose ps'
+                bat 'cd Docker-Compose-Projects && docker compose ps'
             }
         }
 
         stage('Cleanup') {
             steps {
-                bat 'docker image prune -f'
+                bat 'cd Docker-Compose-Projects && docker image prune -f'
             }
         }
     }
